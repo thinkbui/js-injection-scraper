@@ -1,4 +1,5 @@
 # js-injection-scraper
+
 <span style="color:red">
 
 ## WARNING
