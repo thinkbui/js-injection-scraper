@@ -1,4 +1,9 @@
 //ebay jan 2024
+// This was a quick-and-dirty script for use with eBay and the version
+// of its website deployed as of January 2024.  Since that version uses
+// jQuery, this script takes advantage of its library.  However this
+// script is just here as a reference during framework construction and
+// the final version will be strictly in VanillaJS.
 var copyDownloadListToClipboard = function(){
   $("#extract_download_list").select();
   document.execCommand("copy");
