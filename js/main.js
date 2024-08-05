@@ -1,6 +1,9 @@
 const BODY = document.getElementsByTagName("body")[0];
 const SCRAPE_EL_STYLE = `
                           position: fixed;
+                          bottom: 0;
+                          left: 0;
+                          z-index: 1000000000;
                         `;
 const OPENED_EL_STYLE = `
                           height: 500px;
@@ -53,9 +56,6 @@ let copyScrapeList = function(){
 let el = document.createElement("div");
 el.id = "scrape";
 el.style.cssText = SCRAPE_EL_STYLE;
-el.style.bottom = "0";
-el.style.left = "0";
-el.style.zIndex = "1000000000";
 
 let opened_el = document.createElement("div");
 opened_el.id = "scrape_open";
