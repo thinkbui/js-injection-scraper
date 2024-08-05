@@ -71,4 +71,9 @@ gen_scrape_btn.onclick = genScrape;
 gen_scrape_btn.innerHTML = "Generate Scraping Content";
 opened_el.appendChild(gen_scrape_btn);
 
+let scrape_content_el = document.createElement("div");
+scrape_content_el.id = "scrape_content";
+scrape_content_el.innerHTML = "Test";
+opened_el.appendChild(scrape_content_el);
+
 BODY.appendChild(el);
