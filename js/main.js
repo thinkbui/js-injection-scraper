@@ -1,40 +1,50 @@
 const BODY = document.getElementsByTagName("body")[0];
 const OPENED_EL_STYLE = `
-													height: 500px;
-													width: 500px;
-													border: 1px solid black;
-													background-color: white;
-													position: fixed;
-													bottom: 0;
-													left: 0;
-													text-align: center;
-													visibility: hidden;
-												`;
+                          height: 500px;
+                          width: 500px;
+                          border: 1px solid black;
+                          background-color: white;
+                          position: fixed;
+                          bottom: 0;
+                          left: 0;
+                          text-align: center;
+                          overflow: hidden;
+                          visibility: hidden;
+                        `;
 const CLOSED_EL_STYLE = `
-													height: 30px;
-													width: 30px;
-													border: 1px solid black;
-													background-color: white;
-													position: fixed;
-													bottom: 0;
-													left: 0;
-													text-align: center;
-													visibility: visible;
-					  						`;
+                          height: 30px;
+                          width: 30px;
+                          border: 1px solid black;
+                          background-color: white;
+                          position: fixed;
+                          bottom: 0;
+                          left: 0;
+                          text-align: center;
+                          overflow: hidden;
+                          visibility: visible;
+                        `;
 const SCRAPE_BTN_STYLE = "float: right;"
 
 let scrapeClose = function(){
-	closed_el.style.visibility = "visible";
-	opened_el.style.visibility = "hidden";
+  closed_el.style.visibility = "visible";
+  opened_el.style.visibility = "hidden";
 }
 
 let scrapeOpen = function(){
-	closed_el.style.visibility = "hidden";
-	opened_el.style.visibility = "visible";
+  closed_el.style.visibility = "hidden";
+  opened_el.style.visibility = "visible";
 }
 
 let genScrape = function(){
-	alert("Event Trigger");
+  alert("Event Trigger");
+}
+
+let copyScrapeDownload = function(){
+  alert("Event Trigger");
+}
+
+let copyScrapeList = function(){
+  alert("Event Trigger");
 }
 
 let el = document.createElement("div");
@@ -70,5 +80,48 @@ let gen_scrape_btn = document.createElement("button");
 gen_scrape_btn.onclick = genScrape;
 gen_scrape_btn.innerHTML = "Generate Scraping Content";
 opened_el.appendChild(gen_scrape_btn);
+
+let scrape_content_el = document.createElement("div");
+scrape_content_el.id = "scrape_content";
+scrape_content_el.innerHTML = "Count: ";
+
+let count_el = document.createElement("span");
+count_el.id = "scrape_count";
+count_el.innerHTML = "0";
+scrape_content_el.appendChild(count_el);
+scrape_content_el.appendChild(document.createElement("hr"));
+
+let download_el = document.createElement("textarea");
+download_el.id = "scrape_download_commands";
+download_el.cols = 30;
+download_el.rows = 4;
+scrape_content_el.appendChild(download_el);
+scrape_content_el.appendChild(document.createElement("br"));
+
+let download_btn = document.createElement("button");
+download_btn.onclick = copyScrapeDownload;
+download_btn.innerHTML = "Copy Download Commands";
+scrape_content_el.appendChild(download_btn);
+scrape_content_el.appendChild(document.createElement("hr"));
+
+let list_el = document.createElement("textarea");
+list_el.id = "scrape_list";
+list_el.cols = 30;
+list_el.rows = 4;
+scrape_content_el.appendChild(list_el);
+scrape_content_el.appendChild(document.createElement("br"));
+
+let list_btn = document.createElement("button");
+list_btn.onclick = copyScrapeDownload;
+list_btn.innerHTML = "Copy List";
+scrape_content_el.appendChild(list_btn);
+scrape_content_el.appendChild(document.createElement("hr"));
+
+let link_list_el = document.createElement("div");
+link_list_el.id = "link_list";
+link_list_el.innerHTML = "<i>(pending generation)</i>";
+scrape_content_el.appendChild(link_list_el);
+
+opened_el.appendChild(scrape_content_el);
 
 BODY.appendChild(el);
