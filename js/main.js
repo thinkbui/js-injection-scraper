@@ -37,6 +37,14 @@ let genScrape = function(){
 	alert("Event Trigger");
 }
 
+let copyScrapeDownload = function(){
+  alert("Event Trigger");
+}
+
+let copyScrapeList = function(){
+  alert("Event Trigger");
+}
+
 let el = document.createElement("div");
 el.id = "scrape";
 el.style.position = "fixed";
@@ -73,7 +81,27 @@ opened_el.appendChild(gen_scrape_btn);
 
 let scrape_content_el = document.createElement("div");
 scrape_content_el.id = "scrape_content";
-scrape_content_el.innerHTML = "Test";
+scrape_content_el.innerHTML = "Count: ";
+
+let count_el = document.createElement("span");
+count_el.id = "scrape_count";
+count_el.innerHTML = "0";
+scrape_content_el.appendChild(count_el);
+scrape_content_el.appendChild(document.createElement("hr"));
+
+let download_el = document.createElement("textarea");
+download_el.id = "scrape_download_commands";
+download_el.cols = 30;
+download_el.rows = 4;
+scrape_content_el.appendChild(download_el);
+scrape_content_el.appendChild(document.createElement("br"));
+
+let download_btn = document.createElement("button");
+download_btn.onclick = copyScrapeDownload;
+download_btn.innerHTML = "Copy Download Commands";
+scrape_content_el.appendChild(download_btn);
+scrape_content_el.appendChild(document.createElement("hr"));
+
 opened_el.appendChild(scrape_content_el);
 
 BODY.appendChild(el);
