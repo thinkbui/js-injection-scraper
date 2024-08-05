@@ -117,6 +117,11 @@ list_btn.innerHTML = "Copy List";
 scrape_content_el.appendChild(list_btn);
 scrape_content_el.appendChild(document.createElement("hr"));
 
+let link_list_el = document.createElement("div");
+link_list_el.id = "link_list";
+link_list_el.innerHTML = "<i>(pending generation)</i>";
+scrape_content_el.appendChild(link_list_el);
+
 opened_el.appendChild(scrape_content_el);
 
 BODY.appendChild(el);
