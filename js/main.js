@@ -1,40 +1,42 @@
 const BODY = document.getElementsByTagName("body")[0];
 const OPENED_EL_STYLE = `
-													height: 500px;
-													width: 500px;
-													border: 1px solid black;
-													background-color: white;
-													position: fixed;
-													bottom: 0;
-													left: 0;
-													text-align: center;
-													visibility: hidden;
-												`;
+                          height: 500px;
+                          width: 500px;
+                          border: 1px solid black;
+                          background-color: white;
+                          position: fixed;
+                          bottom: 0;
+                          left: 0;
+                          text-align: center;
+                          overflow: hidden;
+                          visibility: hidden;
+                        `;
 const CLOSED_EL_STYLE = `
-													height: 30px;
-													width: 30px;
-													border: 1px solid black;
-													background-color: white;
-													position: fixed;
-													bottom: 0;
-													left: 0;
-													text-align: center;
-													visibility: visible;
-					  						`;
+                          height: 30px;
+                          width: 30px;
+                          border: 1px solid black;
+                          background-color: white;
+                          position: fixed;
+                          bottom: 0;
+                          left: 0;
+                          text-align: center;
+                          overflow: hidden;
+                          visibility: visible;
+                        `;
 const SCRAPE_BTN_STYLE = "float: right;"
 
 let scrapeClose = function(){
-	closed_el.style.visibility = "visible";
-	opened_el.style.visibility = "hidden";
+  closed_el.style.visibility = "visible";
+  opened_el.style.visibility = "hidden";
 }
 
 let scrapeOpen = function(){
-	closed_el.style.visibility = "hidden";
-	opened_el.style.visibility = "visible";
+  closed_el.style.visibility = "hidden";
+  opened_el.style.visibility = "visible";
 }
 
 let genScrape = function(){
-	alert("Event Trigger");
+  alert("Event Trigger");
 }
 
 let copyScrapeDownload = function(){
@@ -100,6 +102,19 @@ let download_btn = document.createElement("button");
 download_btn.onclick = copyScrapeDownload;
 download_btn.innerHTML = "Copy Download Commands";
 scrape_content_el.appendChild(download_btn);
+scrape_content_el.appendChild(document.createElement("hr"));
+
+let list_el = document.createElement("textarea");
+list_el.id = "scrape_list";
+list_el.cols = 30;
+list_el.rows = 4;
+scrape_content_el.appendChild(list_el);
+scrape_content_el.appendChild(document.createElement("br"));
+
+let list_btn = document.createElement("button");
+list_btn.onclick = copyScrapeDownload;
+list_btn.innerHTML = "Copy List";
+scrape_content_el.appendChild(list_btn);
 scrape_content_el.appendChild(document.createElement("hr"));
 
 opened_el.appendChild(scrape_content_el);
