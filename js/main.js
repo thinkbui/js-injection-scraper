@@ -1,4 +1,5 @@
 const BODY = document.getElementsByTagName("body")[0];
+const SCRAPE_DIV_ID = "scrape";
 const SCRAPE_EL_STYLE = `
                           position: fixed;
                           bottom: 0;
@@ -54,7 +55,7 @@ let copyScrapeList = function(){
 }
 
 let el = document.createElement("div");
-el.id = "scrape";
+el.id = SCRAPE_DIV_ID;
 el.style.cssText = SCRAPE_EL_STYLE;
 
 let opened_el = document.createElement("div");
@@ -128,3 +129,21 @@ scrape_content_el.appendChild(link_list_el);
 opened_el.appendChild(scrape_content_el);
 
 BODY.appendChild(el);
+
+let grabImageUrls = function(){
+  var img_urls = [];
+  var pics = $("#PicturePanel").find(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges");
+  console.log(pics.length);
+  if(pics.length > 0){
+    img_urls = $.map(pics, function(n) {var img = $(n).find("img"); var url = $(img).attr("src"); if(url){return url} else{return $(img).attr("data-src")}});
+    console.log(img_urls);
+  } else {
+    var img = $("#PicturePanel").find("div.image")[0];
+    img = $(img).find("img")[0];
+    img_urls.push($(img).attr("src"));
+  }
+  console.log(img_urls);
+  return img_urls;
+}
+
+grabImageUrls();
