@@ -136,15 +136,20 @@ let updateImageCount = function(i){
 
 let grabImageUrls = function(){
   var img_urls = [];
-  var pics = $("#PicturePanel").find(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges");
+  var pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
   // console.log(pics.length);
   if(pics.length > 0){
-    img_urls = $.map(pics, function(n) {var img = $(n).find("img"); var url = $(img).attr("src"); if(url){return url} else{return $(img).attr("data-src")}});
+    img_urls = [...pics].map(function(n) {
+      if(n.src){
+        return n.src;
+      }else{
+        return n.dataset.src;
+      }
+    });
     // console.log(img_urls);
   } else {
-    var img = $("#PicturePanel").find("div.image")[0];
-    img = $(img).find("img")[0];
-    img_urls.push($(img).attr("src"));
+    var img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
+    img_urls.push(img.src);
     // console.log(img_urls);
   }
   // console.log(img_urls);
