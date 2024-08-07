@@ -1,4 +1,5 @@
 const BODY = document.getElementsByTagName("body")[0];
+const SCRAPE_DIV_ID = "scrape";
 const SCRAPE_EL_STYLE = `
                           position: fixed;
                           bottom: 0;
@@ -54,7 +55,7 @@ let copyScrapeList = function(){
 }
 
 let el = document.createElement("div");
-el.id = "scrape";
+el.id = SCRAPE_DIV_ID;
 el.style.cssText = SCRAPE_EL_STYLE;
 
 let opened_el = document.createElement("div");
@@ -128,3 +129,32 @@ scrape_content_el.appendChild(link_list_el);
 opened_el.appendChild(scrape_content_el);
 
 BODY.appendChild(el);
+
+let updateImageCount = function(i){
+  document.getElementById("scrape_count").innerHTML = i;
+}
+
+let grabImageUrls = function(){
+  var img_urls = [];
+  var pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
+  // console.log(pics.length);
+  if(pics.length > 0){
+    img_urls = [...pics].map(function(n) {
+      if(n.src){
+        return n.src;
+      }else{
+        return n.dataset.src;
+      }
+    });
+    // console.log(img_urls);
+  } else {
+    var img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
+    img_urls.push(img.src);
+    // console.log(img_urls);
+  }
+  // console.log(img_urls);
+  updateImageCount(img_urls.length);
+  return img_urls;
+}
+
+grabImageUrls();
