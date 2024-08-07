@@ -45,6 +45,7 @@ let scrapeOpen = function(){
 let genScrape = function(){
   let img_urls = grabImageUrls();
   img_urls = processImgUrls(img_urls);
+  img_urls = removeImgUrlsDups(img_urls);
   updateImageCount(img_urls.length);
 }
 
@@ -167,6 +168,16 @@ let processImgUrls = function(img_urls){
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.gif/i,"/s-l1600.gif"); //////2015 format
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.webp/i,"/s-l1600.jpg"); //////2015 format
+  }
+  return img_urls_buffer;
+}
+
+let removeImgUrlsDups = function(img_urls){
+  let img_urls_buffer = img_urls;
+  for (let j=img_urls_buffer.length-1; j>=0; j--){
+    for (let i=0; i<img_urls_buffer.length; i++){
+      if (i!=j && img_urls_buffer[i]==img_urls_buffer[j]){ img_urls_buffer.splice(j,1)}
+    }
   }
   return img_urls_buffer;
 }
