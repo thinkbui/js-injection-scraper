@@ -43,7 +43,9 @@ let scrapeOpen = function(){
 }
 
 let genScrape = function(){
-  alert("Event Trigger");
+  let img_urls = grabImageUrls();
+  img_urls = processImgUrls(img_urls);
+  updateImageCount(img_urls.length);
 }
 
 let copyScrapeDownload = function(){
@@ -153,7 +155,6 @@ let grabImageUrls = function(){
     // console.log(img_urls);
   }
   // console.log(img_urls);
-  updateImageCount(img_urls.length);
   return img_urls;
 }
 
@@ -169,6 +170,3 @@ let processImgUrls = function(img_urls){
   }
   return img_urls_buffer;
 }
-
-let img_urls = grabImageUrls();
-img_urls = processImgUrls(img_urls);
