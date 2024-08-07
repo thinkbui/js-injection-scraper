@@ -45,6 +45,7 @@ let scrapeOpen = function(){
 let genScrape = function(){
   let img_urls = grabImageUrls();
   img_urls = processImgUrls(img_urls);
+  img_urls = removeImgUrlsDups(img_urls);
   updateImageCount(img_urls.length);
 }
 
