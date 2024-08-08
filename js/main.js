@@ -137,6 +137,16 @@ let updateImageCount = function(i){
   document.getElementById("scrape_count").innerHTML = i;
 }
 
+let getItmNum = function(){
+  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+}
+
+let downloadName = function(url, i){
+  let filename = url.split('/').pop();
+  let filename_segs = filename.split('.');
+  return "ebay " + getItmNum() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
+}
+
 let grabImageUrls = function(){
   let img_urls = [];
   let pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
