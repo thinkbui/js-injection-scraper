@@ -56,11 +56,13 @@ let genScrape = function(){
 }
 
 let copyScrapeDownload = function(){
-  alert("Event Trigger");
+  document.getElementById(SCRAPE_DL_CMD_ID).select();
+  document.execCommand("copy");
 }
 
 let copyScrapeList = function(){
-  alert("Event Trigger");
+  document.getElementById(SCRAPE_URL_LIST_ID).select();
+  document.execCommand("copy");
 }
 
 let el = document.createElement("div");
