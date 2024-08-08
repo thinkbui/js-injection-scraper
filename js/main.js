@@ -1,7 +1,8 @@
 const BODY = document.getElementsByTagName("body")[0];
 const SCRAPE_DIV_ID = "scrape";
 const SCRAPE_DL_CMD_ID = "scrape_download_commands";
-const SCRAPE_LIST_ID = "scrape_list";
+const SCRAPE_URL_LIST_ID = "scrape_list";
+const SCRAPE_LINK_LIST_ID = "scrape_link_list";
 const SCRAPE_EL_STYLE = `
                           position: fixed;
                           bottom: 0;
@@ -51,6 +52,7 @@ let genScrape = function(){
   updateImageCount(img_urls.length);
   populateDownloadCommands(img_urls);
   populateUrlList(img_urls);
+  populateLinkList(img_urls);
 }
 
 let copyScrapeDownload = function(){
@@ -116,7 +118,7 @@ scrape_content_el.appendChild(download_btn);
 scrape_content_el.appendChild(document.createElement("hr"));
 
 let list_el = document.createElement("textarea");
-list_el.id = SCRAPE_LIST_ID;
+list_el.id = SCRAPE_URL_LIST_ID;
 list_el.cols = 30;
 list_el.rows = 4;
 scrape_content_el.appendChild(list_el);
@@ -129,7 +131,7 @@ scrape_content_el.appendChild(list_btn);
 scrape_content_el.appendChild(document.createElement("hr"));
 
 let link_list_el = document.createElement("div");
-link_list_el.id = "link_list";
+link_list_el.id = SCRAPE_LINK_LIST_ID;
 link_list_el.innerHTML = "<i>(pending generation)</i>";
 scrape_content_el.appendChild(link_list_el);
 
@@ -209,5 +211,17 @@ let populateUrlList = function(img_urls){
   for (let i=0; i<img_urls.length; i++){
     url_list += "\"" + img_urls[i] + "\" \"" + downloadName(img_urls[i], i) + "\"\n";
   }
-  document.getElementById(SCRAPE_LIST_ID).innerHTML = url_list;
+  document.getElementById(SCRAPE_URL_LIST_ID).innerHTML = url_list;
+}
+
+let populateLinkList = function(img_urls){
+  document.getElementById(SCRAPE_LINK_LIST_ID).innerHTML = "";
+  for (let i=0; i<img_urls.length; i++){
+    let img_lnk = document.createElement("a");
+    img_lnk.download = downloadName(img_urls[i], i);
+    img_lnk.innerHTML = downloadName(img_urls[i], i);
+    img_lnk.href = img_urls[i];
+    document.getElementById(SCRAPE_LINK_LIST_ID).appendChild(img_lnk);
+    document.getElementById(SCRAPE_LINK_LIST_ID).appendChild(document.createElement("br"));
+  }
 }
