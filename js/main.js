@@ -1,6 +1,7 @@
 const BODY = document.getElementsByTagName("body")[0];
 const SCRAPE_DIV_ID = "scrape";
 const SCRAPE_DL_CMD_ID = "scrape_download_commands";
+const SCRAPE_LIST_ID = "scrape_list";
 const SCRAPE_EL_STYLE = `
                           position: fixed;
                           bottom: 0;
@@ -49,6 +50,7 @@ let genScrape = function(){
   img_urls = removeImgUrlsDups(img_urls);
   updateImageCount(img_urls.length);
   populateDownloadCommands(img_urls);
+  populateUrlList(img_urls);
 }
 
 let copyScrapeDownload = function(){
@@ -114,7 +116,7 @@ scrape_content_el.appendChild(download_btn);
 scrape_content_el.appendChild(document.createElement("hr"));
 
 let list_el = document.createElement("textarea");
-list_el.id = "scrape_list";
+list_el.id = SCRAPE_LIST_ID;
 list_el.cols = 30;
 list_el.rows = 4;
 scrape_content_el.appendChild(list_el);
@@ -197,7 +199,15 @@ let removeImgUrlsDups = function(img_urls){
 let populateDownloadCommands = function(img_urls){
   let download_commands = "";
   for (let i=0; i<img_urls.length; i++){
-    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i]) + "\"\n";
+    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i], i) + "\"\n";
   }
   document.getElementById(SCRAPE_DL_CMD_ID).innerHTML = download_commands;
+}
+
+let populateUrlList = function(img_urls){
+  let url_list = "";
+  for (let i=0; i<img_urls.length; i++){
+    url_list += "\"" + img_urls[i] + "\" \"" + downloadName(img_urls[i], i) + "\"\n";
+  }
+  document.getElementById(SCRAPE_LIST_ID).innerHTML = url_list;
 }
