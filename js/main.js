@@ -1,5 +1,6 @@
 const BODY = document.getElementsByTagName("body")[0];
 const SCRAPE_DIV_ID = "scrape";
+const SCRAPE_DL_CMD_ID = "scrape_download_commands";
 const SCRAPE_EL_STYLE = `
                           position: fixed;
                           bottom: 0;
@@ -47,6 +48,7 @@ let genScrape = function(){
   img_urls = processImgUrls(img_urls);
   img_urls = removeImgUrlsDups(img_urls);
   updateImageCount(img_urls.length);
+  populateDownloadCommands(img_urls);
 }
 
 let copyScrapeDownload = function(){
@@ -99,7 +101,7 @@ scrape_content_el.appendChild(count_el);
 scrape_content_el.appendChild(document.createElement("hr"));
 
 let download_el = document.createElement("textarea");
-download_el.id = "scrape_download_commands";
+download_el.id = SCRAPE_DL_CMD_ID;
 download_el.cols = 30;
 download_el.rows = 4;
 scrape_content_el.appendChild(download_el);
@@ -135,6 +137,16 @@ BODY.appendChild(el);
 
 let updateImageCount = function(i){
   document.getElementById("scrape_count").innerHTML = i;
+}
+
+let getItmNum = function(){
+  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+}
+
+let downloadName = function(url, i){
+  let filename = url.split('/').pop();
+  let filename_segs = filename.split('.');
+  return "ebay " + getItmNum() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
 }
 
 let grabImageUrls = function(){
@@ -180,4 +192,12 @@ let removeImgUrlsDups = function(img_urls){
     }
   }
   return img_urls_buffer;
+}
+
+let populateDownloadCommands = function(img_urls){
+  let download_commands = "";
+  for (let i=0; i<img_urls.length; i++){
+    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i]) + "\"\n";
+  }
+  document.getElementById(SCRAPE_DL_CMD_ID).innerHTML = download_commands;
 }
