@@ -1,5 +1,9 @@
 const BODY = document.getElementsByTagName("body")[0];
 const SCRAPE_DIV_ID = "scrape";
+const SCRAPE_CONTENT_ID = "scrape_content";
+const SCRAPE_OPENED_ID = "scrape_open";
+const SCRAPE_CLOSED_ID = "scrape_close";
+const SCRAPE_COUNT_ID = "scrape_count";
 const SCRAPE_DL_CMD_ID = "scrape_download_commands";
 const SCRAPE_URL_LIST_ID = "scrape_list";
 const SCRAPE_LINK_LIST_ID = "scrape_link_list";
@@ -36,13 +40,13 @@ const CLOSED_EL_STYLE = `
 const SCRAPE_BTN_STYLE = "float: right;"
 
 let scrapeClose = function(){
-  closed_el.style.visibility = "visible";
-  opened_el.style.visibility = "hidden";
+  document.getElementById(SCRAPE_CLOSED_ID).style.visibility = "visible";
+  document.getElementById(SCRAPE_OPENED_ID).style.visibility = "hidden";
 }
 
 let scrapeOpen = function(){
-  closed_el.style.visibility = "hidden";
-  opened_el.style.visibility = "visible";
+  document.getElementById(SCRAPE_CLOSED_ID).style.visibility = "hidden";
+  document.getElementById(SCRAPE_OPENED_ID).style.visibility = "visible";
 }
 
 let genScrape = function(){
@@ -65,84 +69,86 @@ let copyScrapeList = function(){
   document.execCommand("copy");
 }
 
-let el = document.createElement("div");
-el.id = SCRAPE_DIV_ID;
-el.style.cssText = SCRAPE_EL_STYLE;
+if (!document.getElementById(SCRAPE_DIV_ID)){
+  let el = document.createElement("div");
+  el.id = SCRAPE_DIV_ID;
+  el.style.cssText = SCRAPE_EL_STYLE;
 
-let opened_el = document.createElement("div");
-opened_el.id = "scrape_open";
-opened_el.style.cssText = OPENED_EL_STYLE;
-el.appendChild(opened_el);
+  let opened_el = document.createElement("div");
+  opened_el.id = SCRAPE_OPENED_ID;
+  opened_el.style.cssText = OPENED_EL_STYLE;
+  el.appendChild(opened_el);
 
-let close_btn = document.createElement("button");
-close_btn.onclick = scrapeClose;
-close_btn.innerHTML = "X";
-close_btn.style.cssText = SCRAPE_BTN_STYLE;
-opened_el.appendChild(close_btn);
+  let close_btn = document.createElement("button");
+  close_btn.onclick = scrapeClose;
+  close_btn.innerHTML = "X";
+  close_btn.style.cssText = SCRAPE_BTN_STYLE;
+  opened_el.appendChild(close_btn);
 
-let closed_el = document.createElement("div");
-closed_el.id = "scrape_close";
-closed_el.style.cssText = CLOSED_EL_STYLE;
-el.appendChild(closed_el);
+  let closed_el = document.createElement("div");
+  closed_el.id = SCRAPE_CLOSED_ID;
+  closed_el.style.cssText = CLOSED_EL_STYLE;
+  el.appendChild(closed_el);
 
-let open_btn = document.createElement("button");
-open_btn.onclick = scrapeOpen;
-open_btn.innerHTML = "↗";
-open_btn.style.cssText = SCRAPE_BTN_STYLE;
-closed_el.appendChild(open_btn);
+  let open_btn = document.createElement("button");
+  open_btn.onclick = scrapeOpen;
+  open_btn.innerHTML = "↗";
+  open_btn.style.cssText = SCRAPE_BTN_STYLE;
+  closed_el.appendChild(open_btn);
 
-let gen_scrape_btn = document.createElement("button");
-gen_scrape_btn.onclick = genScrape;
-gen_scrape_btn.innerHTML = "Generate Scraping Content";
-opened_el.appendChild(gen_scrape_btn);
+  let gen_scrape_btn = document.createElement("button");
+  gen_scrape_btn.onclick = genScrape;
+  gen_scrape_btn.innerHTML = "Generate Scraping Content";
+  opened_el.appendChild(gen_scrape_btn);
 
-let scrape_content_el = document.createElement("div");
-scrape_content_el.id = "scrape_content";
-scrape_content_el.innerHTML = "Count: ";
+  let scrape_content_el = document.createElement("div");
+  scrape_content_el.id = SCRAPE_CONTENT_ID;
+  scrape_content_el.innerHTML = "Count: ";
 
-let count_el = document.createElement("span");
-count_el.id = "scrape_count";
-count_el.innerHTML = "0";
-scrape_content_el.appendChild(count_el);
-scrape_content_el.appendChild(document.createElement("hr"));
+  let count_el = document.createElement("span");
+  count_el.id = SCRAPE_COUNT_ID;
+  count_el.innerHTML = "0";
+  scrape_content_el.appendChild(count_el);
+  scrape_content_el.appendChild(document.createElement("hr"));
 
-let download_el = document.createElement("textarea");
-download_el.id = SCRAPE_DL_CMD_ID;
-download_el.cols = 30;
-download_el.rows = 4;
-scrape_content_el.appendChild(download_el);
-scrape_content_el.appendChild(document.createElement("br"));
+  let download_el = document.createElement("textarea");
+  download_el.id = SCRAPE_DL_CMD_ID;
+  download_el.cols = 30;
+  download_el.rows = 4;
+  scrape_content_el.appendChild(download_el);
+  scrape_content_el.appendChild(document.createElement("br"));
 
-let download_btn = document.createElement("button");
-download_btn.onclick = copyScrapeDownload;
-download_btn.innerHTML = "Copy Download Commands";
-scrape_content_el.appendChild(download_btn);
-scrape_content_el.appendChild(document.createElement("hr"));
+  let download_btn = document.createElement("button");
+  download_btn.onclick = copyScrapeDownload;
+  download_btn.innerHTML = "Copy Download Commands";
+  scrape_content_el.appendChild(download_btn);
+  scrape_content_el.appendChild(document.createElement("hr"));
 
-let list_el = document.createElement("textarea");
-list_el.id = SCRAPE_URL_LIST_ID;
-list_el.cols = 30;
-list_el.rows = 4;
-scrape_content_el.appendChild(list_el);
-scrape_content_el.appendChild(document.createElement("br"));
+  let list_el = document.createElement("textarea");
+  list_el.id = SCRAPE_URL_LIST_ID;
+  list_el.cols = 30;
+  list_el.rows = 4;
+  scrape_content_el.appendChild(list_el);
+  scrape_content_el.appendChild(document.createElement("br"));
 
-let list_btn = document.createElement("button");
-list_btn.onclick = copyScrapeDownload;
-list_btn.innerHTML = "Copy List";
-scrape_content_el.appendChild(list_btn);
-scrape_content_el.appendChild(document.createElement("hr"));
+  let list_btn = document.createElement("button");
+  list_btn.onclick = copyScrapeList;
+  list_btn.innerHTML = "Copy List";
+  scrape_content_el.appendChild(list_btn);
+  scrape_content_el.appendChild(document.createElement("hr"));
 
-let link_list_el = document.createElement("div");
-link_list_el.id = SCRAPE_LINK_LIST_ID;
-link_list_el.innerHTML = "<i>(pending generation)</i>";
-scrape_content_el.appendChild(link_list_el);
+  let link_list_el = document.createElement("div");
+  link_list_el.id = SCRAPE_LINK_LIST_ID;
+  link_list_el.innerHTML = "<i>(pending generation)</i>";
+  scrape_content_el.appendChild(link_list_el);
 
-opened_el.appendChild(scrape_content_el);
+  opened_el.appendChild(scrape_content_el);
 
-BODY.appendChild(el);
+  BODY.appendChild(el);
+}
 
 let updateImageCount = function(i){
-  document.getElementById("scrape_count").innerHTML = i;
+  document.getElementById(SCRAPE_COUNT_ID).innerHTML = i;
 }
 
 let getItmNum = function(){
@@ -221,6 +227,7 @@ let populateUrlList = function(img_urls){
 }
 
 let populateLinkList = function(img_urls){
+  let link_list_el = document.getElementById(SCRAPE_LINK_LIST_ID);
   link_list_el.innerHTML = "";
   for (let i=0; i<img_urls.length; i++){
     let img_lnk = document.createElement("a");
