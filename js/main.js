@@ -217,13 +217,13 @@ let populateUrlList = function(img_urls){
 }
 
 let populateLinkList = function(img_urls){
-  document.getElementById(SCRAPE_LINK_LIST_ID).innerHTML = "";
+  link_list_el.innerHTML = "";
   for (let i=0; i<img_urls.length; i++){
     let img_lnk = document.createElement("a");
+    img_lnk.href = img_urls[i];
     img_lnk.download = downloadName(img_urls[i], i);
     img_lnk.innerHTML = downloadName(img_urls[i], i);
-    img_lnk.href = img_urls[i];
-    document.getElementById(SCRAPE_LINK_LIST_ID).appendChild(img_lnk);
-    document.getElementById(SCRAPE_LINK_LIST_ID).appendChild(document.createElement("br"));
+    link_list_el.appendChild(img_lnk);
+    link_list_el.appendChild(document.createElement("br"));
   }
 }
