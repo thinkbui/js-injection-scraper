@@ -1,3 +1,52 @@
+let getItmNum = function(){
+  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+}
+
+let getItmDesc = function(){
+  return document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+}
+
+let downloadName = function(url, i){
+  let filename = url.split('/').pop();
+  let filename_segs = filename.split('.');
+  return "ebay " + getItmNum() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
+}
+
+let grabImageUrls = function(){
+  let img_urls = [];
+  let pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
+  // console.log(pics.length);
+  if(pics.length > 0){
+    img_urls = [...pics].map(function(n) {
+      if(n.src){
+        return n.src;
+      }else{
+        return n.dataset.src;
+      }
+    });
+    // console.log(img_urls);
+  } else {
+    let img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
+    img_urls.push(img.src);
+    // console.log(img_urls);
+  }
+  // console.log(img_urls);
+  return img_urls;
+}
+
+let processImgUrls = function(img_urls){
+  let img_urls_buffer = img_urls;
+  for (let i=0; i<img_urls_buffer.length; i++){
+    console.log(img_urls_buffer);
+    img_urls_buffer[i]=img_urls_buffer[i].replace(/_\d+\.JPG/,"_10.JPG");
+    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.jpg/i,"/s-l1600.jpg"); //////2015 format
+    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
+    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.gif/i,"/s-l1600.gif"); //////2015 format
+    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.webp/i,"/s-l1600.jpg"); //////2015 format
+  }
+  return img_urls_buffer;
+}
+
 const BODY = document.getElementsByTagName("body")[0];
 const SCRAPE_DIV_ID = "scrape";
 const SCRAPE_CONTENT_ID = "scrape_content";
@@ -149,55 +198,6 @@ if (!document.getElementById(SCRAPE_DIV_ID)){
 
 let updateImageCount = function(i){
   document.getElementById(SCRAPE_COUNT_ID).innerHTML = i;
-}
-
-let getItmNum = function(){
-  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
-}
-
-let getItmDesc = function(){
-  return document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
-}
-
-let downloadName = function(url, i){
-  let filename = url.split('/').pop();
-  let filename_segs = filename.split('.');
-  return "ebay " + getItmNum() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
-}
-
-let grabImageUrls = function(){
-  let img_urls = [];
-  let pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
-  // console.log(pics.length);
-  if(pics.length > 0){
-    img_urls = [...pics].map(function(n) {
-      if(n.src){
-        return n.src;
-      }else{
-        return n.dataset.src;
-      }
-    });
-    // console.log(img_urls);
-  } else {
-    let img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
-    img_urls.push(img.src);
-    // console.log(img_urls);
-  }
-  // console.log(img_urls);
-  return img_urls;
-}
-
-let processImgUrls = function(img_urls){
-  let img_urls_buffer = img_urls;
-  for (let i=0; i<img_urls_buffer.length; i++){
-    console.log(img_urls_buffer);
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/_\d+\.JPG/,"_10.JPG");
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.jpg/i,"/s-l1600.jpg"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.gif/i,"/s-l1600.gif"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.webp/i,"/s-l1600.jpg"); //////2015 format
-  }
-  return img_urls_buffer;
 }
 
 let removeImgUrlsDups = function(img_urls){
