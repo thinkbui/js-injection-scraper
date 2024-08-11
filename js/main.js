@@ -141,6 +141,68 @@ let buildGenScrapeBtn = function(){
   return gen_scrape_btn;
 }
 
+let buildCountEl = function(){
+  let count_el = document.createElement("span");
+  count_el.id = SCRAPE_COUNT_ID;
+  count_el.innerHTML = "0";
+  return count_el;
+}
+
+let buildDownloadEl = function(){
+  let download_el = document.createElement("textarea");
+  download_el.id = SCRAPE_DL_CMD_ID;
+  download_el.cols = 30;
+  download_el.rows = 4;
+  return download_el;
+}
+
+let buildDownloadBtn = function(){
+  let download_btn = document.createElement("button");
+  download_btn.onclick = copyScrapeDownload;
+  download_btn.innerHTML = "Copy Download Commands";
+  return download_btn;
+}
+
+let buildListEl = function(){
+  let list_el = document.createElement("textarea");
+  list_el.id = SCRAPE_URL_LIST_ID;
+  list_el.cols = 30;
+  list_el.rows = 4;
+  return list_el;
+}
+
+let buildListBtn = function(){
+  let list_btn = document.createElement("button");
+  list_btn.onclick = copyScrapeList;
+  list_btn.innerHTML = "Copy List";
+  return list_btn;
+}
+
+let buildLinkListEl = function(){
+  let link_list_el = document.createElement("div");
+  link_list_el.id = SCRAPE_LINK_LIST_ID;
+  link_list_el.innerHTML = "<i>(pending generation)</i>";
+  return link_list_el;
+}
+
+let buildScrapeContentEl = function(){
+  let scrape_content_el = document.createElement("div");
+  scrape_content_el.id = SCRAPE_CONTENT_ID;
+  scrape_content_el.innerHTML = "Count: ";
+  scrape_content_el.appendChild(buildCountEl());
+  scrape_content_el.appendChild(document.createElement("hr"));
+  scrape_content_el.appendChild(buildDownloadEl());
+  scrape_content_el.appendChild(document.createElement("br"));
+  scrape_content_el.appendChild(buildDownloadBtn());
+  scrape_content_el.appendChild(document.createElement("hr"));
+  scrape_content_el.appendChild(buildListEl());
+  scrape_content_el.appendChild(document.createElement("br"));
+  scrape_content_el.appendChild(buildListBtn());
+  scrape_content_el.appendChild(document.createElement("hr"));
+  scrape_content_el.appendChild(buildLinkListEl());
+  return scrape_content_el;
+}
+
 if (!document.getElementById(SCRAPE_DIV_ID)){
   let el = document.createElement("div");
   el.id = SCRAPE_DIV_ID;
@@ -151,6 +213,7 @@ if (!document.getElementById(SCRAPE_DIV_ID)){
   opened_el.style.cssText = OPENED_EL_STYLE;
   opened_el.appendChild(buildCloseBtn());
   opened_el.appendChild(buildGenScrapeBtn());
+  opened_el.appendChild(buildScrapeContentEl());
   el.appendChild(opened_el);
 
   let closed_el = document.createElement("div");
@@ -158,49 +221,6 @@ if (!document.getElementById(SCRAPE_DIV_ID)){
   closed_el.style.cssText = CLOSED_EL_STYLE;
   closed_el.appendChild(buildOpenBtn());
   el.appendChild(closed_el);
-
-  let scrape_content_el = document.createElement("div");
-  scrape_content_el.id = SCRAPE_CONTENT_ID;
-  scrape_content_el.innerHTML = "Count: ";
-
-  let count_el = document.createElement("span");
-  count_el.id = SCRAPE_COUNT_ID;
-  count_el.innerHTML = "0";
-  scrape_content_el.appendChild(count_el);
-  scrape_content_el.appendChild(document.createElement("hr"));
-
-  let download_el = document.createElement("textarea");
-  download_el.id = SCRAPE_DL_CMD_ID;
-  download_el.cols = 30;
-  download_el.rows = 4;
-  scrape_content_el.appendChild(download_el);
-  scrape_content_el.appendChild(document.createElement("br"));
-
-  let download_btn = document.createElement("button");
-  download_btn.onclick = copyScrapeDownload;
-  download_btn.innerHTML = "Copy Download Commands";
-  scrape_content_el.appendChild(download_btn);
-  scrape_content_el.appendChild(document.createElement("hr"));
-
-  let list_el = document.createElement("textarea");
-  list_el.id = SCRAPE_URL_LIST_ID;
-  list_el.cols = 30;
-  list_el.rows = 4;
-  scrape_content_el.appendChild(list_el);
-  scrape_content_el.appendChild(document.createElement("br"));
-
-  let list_btn = document.createElement("button");
-  list_btn.onclick = copyScrapeList;
-  list_btn.innerHTML = "Copy List";
-  scrape_content_el.appendChild(list_btn);
-  scrape_content_el.appendChild(document.createElement("hr"));
-
-  let link_list_el = document.createElement("div");
-  link_list_el.id = SCRAPE_LINK_LIST_ID;
-  link_list_el.innerHTML = "<i>(pending generation)</i>";
-  scrape_content_el.appendChild(link_list_el);
-
-  opened_el.appendChild(scrape_content_el);
 
   BODY.appendChild(el);
 }
