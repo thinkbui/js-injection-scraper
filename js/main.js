@@ -203,26 +203,35 @@ let buildScrapeContentEl = function(){
   return scrape_content_el;
 }
 
-if (!document.getElementById(SCRAPE_DIV_ID)){
-  let el = document.createElement("div");
-  el.id = SCRAPE_DIV_ID;
-  el.style.cssText = SCRAPE_EL_STYLE;
-
+let buildOpenedEl = function(){
   let opened_el = document.createElement("div");
   opened_el.id = SCRAPE_OPENED_ID;
   opened_el.style.cssText = OPENED_EL_STYLE;
   opened_el.appendChild(buildCloseBtn());
   opened_el.appendChild(buildGenScrapeBtn());
   opened_el.appendChild(buildScrapeContentEl());
-  el.appendChild(opened_el);
+  return opened_el;
+}
 
+let buildClosedEl = function(){
   let closed_el = document.createElement("div");
   closed_el.id = SCRAPE_CLOSED_ID;
   closed_el.style.cssText = CLOSED_EL_STYLE;
   closed_el.appendChild(buildOpenBtn());
-  el.appendChild(closed_el);
+  return closed_el;
+}
 
+let buildScrapeEl = function(){
+  let el = document.createElement("div");
+  el.id = SCRAPE_DIV_ID;
+  el.style.cssText = SCRAPE_EL_STYLE;
+  el.appendChild(buildOpenedEl());
+  el.appendChild(buildClosedEl());
   BODY.appendChild(el);
+}
+
+if (!document.getElementById(SCRAPE_DIV_ID)){
+  buildScrapeEl();
 }
 
 let updateImageCount = function(i){
