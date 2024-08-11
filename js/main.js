@@ -126,6 +126,14 @@ let buildCloseBtn = function(){
   return close_btn;
 }
 
+let buildOpenBtn = function(){
+  let open_btn = document.createElement("button");
+  open_btn.onclick = scrapeOpen;
+  open_btn.innerHTML = "↗";
+  open_btn.style.cssText = SCRAPE_BTN_STYLE;
+  return open_btn;
+}
+
 if (!document.getElementById(SCRAPE_DIV_ID)){
   let el = document.createElement("div");
   el.id = SCRAPE_DIV_ID;
@@ -134,20 +142,16 @@ if (!document.getElementById(SCRAPE_DIV_ID)){
   let opened_el = document.createElement("div");
   opened_el.id = SCRAPE_OPENED_ID;
   opened_el.style.cssText = OPENED_EL_STYLE;
+  opened_el.appendChild(buildCloseBtn());
   el.appendChild(opened_el);
 
-  opened_el.appendChild(buildCloseBtn());
 
   let closed_el = document.createElement("div");
   closed_el.id = SCRAPE_CLOSED_ID;
   closed_el.style.cssText = CLOSED_EL_STYLE;
+  closed_el.appendChild(buildOpenBtn());
   el.appendChild(closed_el);
 
-  let open_btn = document.createElement("button");
-  open_btn.onclick = scrapeOpen;
-  open_btn.innerHTML = "↗";
-  open_btn.style.cssText = SCRAPE_BTN_STYLE;
-  closed_el.appendChild(open_btn);
 
   let gen_scrape_btn = document.createElement("button");
   gen_scrape_btn.onclick = genScrape;
