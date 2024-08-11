@@ -118,6 +118,14 @@ let copyScrapeList = function(){
   document.execCommand("copy");
 }
 
+let buildCloseBtn = function(){
+  let close_btn = document.createElement("button");
+  close_btn.onclick = scrapeClose;
+  close_btn.innerHTML = "X";
+  close_btn.style.cssText = SCRAPE_BTN_STYLE;
+  return close_btn;
+}
+
 if (!document.getElementById(SCRAPE_DIV_ID)){
   let el = document.createElement("div");
   el.id = SCRAPE_DIV_ID;
@@ -128,11 +136,7 @@ if (!document.getElementById(SCRAPE_DIV_ID)){
   opened_el.style.cssText = OPENED_EL_STYLE;
   el.appendChild(opened_el);
 
-  let close_btn = document.createElement("button");
-  close_btn.onclick = scrapeClose;
-  close_btn.innerHTML = "X";
-  close_btn.style.cssText = SCRAPE_BTN_STYLE;
-  opened_el.appendChild(close_btn);
+  opened_el.appendChild(buildCloseBtn());
 
   let closed_el = document.createElement("div");
   closed_el.id = SCRAPE_CLOSED_ID;
