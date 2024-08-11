@@ -134,6 +134,13 @@ let buildOpenBtn = function(){
   return open_btn;
 }
 
+let buildGenScrapeBtn = function(){
+  let gen_scrape_btn = document.createElement("button");
+  gen_scrape_btn.onclick = genScrape;
+  gen_scrape_btn.innerHTML = "Generate Scraping Content";
+  return gen_scrape_btn;
+}
+
 if (!document.getElementById(SCRAPE_DIV_ID)){
   let el = document.createElement("div");
   el.id = SCRAPE_DIV_ID;
@@ -143,20 +150,14 @@ if (!document.getElementById(SCRAPE_DIV_ID)){
   opened_el.id = SCRAPE_OPENED_ID;
   opened_el.style.cssText = OPENED_EL_STYLE;
   opened_el.appendChild(buildCloseBtn());
+  opened_el.appendChild(buildGenScrapeBtn());
   el.appendChild(opened_el);
-
 
   let closed_el = document.createElement("div");
   closed_el.id = SCRAPE_CLOSED_ID;
   closed_el.style.cssText = CLOSED_EL_STYLE;
   closed_el.appendChild(buildOpenBtn());
   el.appendChild(closed_el);
-
-
-  let gen_scrape_btn = document.createElement("button");
-  gen_scrape_btn.onclick = genScrape;
-  gen_scrape_btn.innerHTML = "Generate Scraping Content";
-  opened_el.appendChild(gen_scrape_btn);
 
   let scrape_content_el = document.createElement("div");
   scrape_content_el.id = SCRAPE_CONTENT_ID;
