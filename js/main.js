@@ -37,7 +37,7 @@ let grabImageUrls = function(){
 let processImgUrls = function(img_urls){
   let img_urls_buffer = img_urls;
   for (let i=0; i<img_urls_buffer.length; i++){
-    console.log(img_urls_buffer);
+    // console.log(img_urls_buffer);
     img_urls_buffer[i]=img_urls_buffer[i].replace(/_\d+\.JPG/,"_10.JPG");
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.jpg/i,"/s-l1600.jpg"); //////2015 format
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
@@ -189,17 +189,19 @@ let buildScrapeContentEl = function(){
   let scrape_content_el = document.createElement("div");
   scrape_content_el.id = SCRAPE_CONTENT_ID;
   scrape_content_el.innerHTML = "Count: ";
-  scrape_content_el.appendChild(buildCountEl());
-  scrape_content_el.appendChild(document.createElement("hr"));
-  scrape_content_el.appendChild(buildDownloadEl());
-  scrape_content_el.appendChild(document.createElement("br"));
-  scrape_content_el.appendChild(buildDownloadBtn());
-  scrape_content_el.appendChild(document.createElement("hr"));
-  scrape_content_el.appendChild(buildListEl());
-  scrape_content_el.appendChild(document.createElement("br"));
-  scrape_content_el.appendChild(buildListBtn());
-  scrape_content_el.appendChild(document.createElement("hr"));
-  scrape_content_el.appendChild(buildLinkListEl());
+  scrape_content_el.append(
+                            buildCountEl(),
+                            document.createElement("hr"),
+                            buildDownloadEl(),
+                            document.createElement("br"),
+                            buildDownloadBtn(),
+                            document.createElement("hr"),
+                            buildListEl(),
+                            document.createElement("br"),
+                            buildListBtn(),
+                            document.createElement("hr"),
+                            buildLinkListEl()
+                          );
   return scrape_content_el;
 }
 
@@ -207,9 +209,11 @@ let buildOpenedEl = function(){
   let opened_el = document.createElement("div");
   opened_el.id = SCRAPE_OPENED_ID;
   opened_el.style.cssText = OPENED_EL_STYLE;
-  opened_el.appendChild(buildCloseBtn());
-  opened_el.appendChild(buildGenScrapeBtn());
-  opened_el.appendChild(buildScrapeContentEl());
+  opened_el.append(
+                    buildCloseBtn(),
+                    buildGenScrapeBtn(),
+                    buildScrapeContentEl()
+                  );
   return opened_el;
 }
 
@@ -225,8 +229,10 @@ let buildScrapeEl = function(){
   let el = document.createElement("div");
   el.id = SCRAPE_DIV_ID;
   el.style.cssText = SCRAPE_EL_STYLE;
-  el.appendChild(buildOpenedEl());
-  el.appendChild(buildClosedEl());
+  el.append(
+             buildOpenedEl(),
+             buildClosedEl()
+           );
   BODY.appendChild(el);
 }
 
@@ -272,7 +278,9 @@ let populateLinkList = function(img_urls){
     img_lnk.href = img_urls[i];
     img_lnk.download = downloadName(img_urls[i], i);
     img_lnk.innerHTML = downloadName(img_urls[i], i);
-    link_list_el.appendChild(img_lnk);
-    link_list_el.appendChild(document.createElement("br"));
+    link_list_el.append(
+                         img_lnk,
+                         document.createElement("br")
+                       );
   }
 }
