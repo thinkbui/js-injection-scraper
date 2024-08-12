@@ -103,9 +103,7 @@ let genScrape = function(){
   img_urls = processImgUrls(img_urls);
   img_urls = removeImgUrlsDups(img_urls);
   updateImageCount(img_urls.length);
-  populateDownloadCommands(img_urls);
-  populateUrlList(img_urls);
-  populateLinkList(img_urls);
+  populateLists(img_urls);
 }
 
 let copyScrapeDownload = function(){
@@ -254,22 +252,6 @@ let removeImgUrlsDups = function(img_urls){
   return img_urls_buffer;
 }
 
-let populateDownloadCommands = function(img_urls){
-  let download_commands = "";
-  for (let i=0; i<img_urls.length; i++){
-    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i], i) + "\"\n";
-  }
-  document.getElementById(SCRAPE_DL_CMD_ID).innerHTML = download_commands;
-}
-
-let populateUrlList = function(img_urls){
-  let url_list = "";
-  for (let i=0; i<img_urls.length; i++){
-    url_list += "\"" + img_urls[i] + "\" \"" + downloadName(img_urls[i], i) + "\"\n";
-  }
-  document.getElementById(SCRAPE_URL_LIST_ID).innerHTML = url_list;
-}
-
 let buildLinkListItem = function(url, i){
   let img_lnk = document.createElement("a");
   img_lnk.href = url;
@@ -278,13 +260,26 @@ let buildLinkListItem = function(url, i){
   return img_lnk;
 }
 
-let populateLinkList = function(img_urls){
+let populateLists = function(img_urls){
+  let download_commands = "";
+
+  let url_list = "";
+
   let link_list_el = document.getElementById(SCRAPE_LINK_LIST_ID);
   link_list_el.innerHTML = "";
+
   for (let i=0; i<img_urls.length; i++){
+    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i], i) + "\"\n";
+
+    url_list += "\"" + img_urls[i] + "\" \"" + downloadName(img_urls[i], i) + "\"\n";
+
     link_list_el.append(
                          buildLinkListItem(img_urls[i], i),
                          document.createElement("br")
                        );
   }
+
+  document.getElementById(SCRAPE_DL_CMD_ID).innerHTML = download_commands;
+
+  document.getElementById(SCRAPE_URL_LIST_ID).innerHTML = url_list;
 }
