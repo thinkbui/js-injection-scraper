@@ -106,6 +106,52 @@ let genScrape = function(){
   populateLists(img_urls);
 }
 
+let updateImageCount = function(i){
+  document.getElementById(SCRAPE_COUNT_ID).innerHTML = i;
+}
+
+let removeImgUrlsDups = function(img_urls){
+  let img_urls_buffer = img_urls;
+  for (let j=img_urls_buffer.length-1; j>=0; j--){
+    for (let i=0; i<img_urls_buffer.length; i++){
+      if (i!=j && img_urls_buffer[i]==img_urls_buffer[j]){ img_urls_buffer.splice(j,1)}
+    }
+  }
+  return img_urls_buffer;
+}
+
+let buildLinkListItem = function(url, i){
+  let img_lnk = document.createElement("a");
+  img_lnk.href = url;
+  img_lnk.download = downloadName(url, i);
+  img_lnk.innerHTML = downloadName(url, i);
+  return img_lnk;
+}
+
+let populateLists = function(img_urls){
+  let download_commands = "";
+
+  let url_list = "";
+
+  let link_list_el = document.getElementById(SCRAPE_LINK_LIST_ID);
+  link_list_el.innerHTML = "";
+
+  for (let i=0; i<img_urls.length; i++){
+    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i], i) + "\"\n";
+
+    url_list += "\"" + img_urls[i] + "\" \"" + downloadName(img_urls[i], i) + "\"\n";
+
+    link_list_el.append(
+                         buildLinkListItem(img_urls[i], i),
+                         document.createElement("br")
+                       );
+  }
+
+  document.getElementById(SCRAPE_DL_CMD_ID).innerHTML = download_commands;
+
+  document.getElementById(SCRAPE_URL_LIST_ID).innerHTML = url_list;
+}
+
 let copyScrapeDownload = function(){
   document.getElementById(SCRAPE_DL_CMD_ID).select();
   document.execCommand("copy");
@@ -236,50 +282,4 @@ let buildScrapeEl = function(){
 
 if (!document.getElementById(SCRAPE_DIV_ID)){
   buildScrapeEl();
-}
-
-let updateImageCount = function(i){
-  document.getElementById(SCRAPE_COUNT_ID).innerHTML = i;
-}
-
-let removeImgUrlsDups = function(img_urls){
-  let img_urls_buffer = img_urls;
-  for (let j=img_urls_buffer.length-1; j>=0; j--){
-    for (let i=0; i<img_urls_buffer.length; i++){
-      if (i!=j && img_urls_buffer[i]==img_urls_buffer[j]){ img_urls_buffer.splice(j,1)}
-    }
-  }
-  return img_urls_buffer;
-}
-
-let buildLinkListItem = function(url, i){
-  let img_lnk = document.createElement("a");
-  img_lnk.href = url;
-  img_lnk.download = downloadName(url, i);
-  img_lnk.innerHTML = downloadName(url, i);
-  return img_lnk;
-}
-
-let populateLists = function(img_urls){
-  let download_commands = "";
-
-  let url_list = "";
-
-  let link_list_el = document.getElementById(SCRAPE_LINK_LIST_ID);
-  link_list_el.innerHTML = "";
-
-  for (let i=0; i<img_urls.length; i++){
-    download_commands += "curl \"" + img_urls[i] + "\" -o \"" + downloadName(img_urls[i], i) + "\"\n";
-
-    url_list += "\"" + img_urls[i] + "\" \"" + downloadName(img_urls[i], i) + "\"\n";
-
-    link_list_el.append(
-                         buildLinkListItem(img_urls[i], i),
-                         document.createElement("br")
-                       );
-  }
-
-  document.getElementById(SCRAPE_DL_CMD_ID).innerHTML = download_commands;
-
-  document.getElementById(SCRAPE_URL_LIST_ID).innerHTML = url_list;
 }
