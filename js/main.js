@@ -270,16 +270,20 @@ let populateUrlList = function(img_urls){
   document.getElementById(SCRAPE_URL_LIST_ID).innerHTML = url_list;
 }
 
+let buildLinkListItem = function(url, i){
+  let img_lnk = document.createElement("a");
+  img_lnk.href = url;
+  img_lnk.download = downloadName(url, i);
+  img_lnk.innerHTML = downloadName(url, i);
+  return img_lnk;
+}
+
 let populateLinkList = function(img_urls){
   let link_list_el = document.getElementById(SCRAPE_LINK_LIST_ID);
   link_list_el.innerHTML = "";
   for (let i=0; i<img_urls.length; i++){
-    let img_lnk = document.createElement("a");
-    img_lnk.href = img_urls[i];
-    img_lnk.download = downloadName(img_urls[i], i);
-    img_lnk.innerHTML = downloadName(img_urls[i], i);
     link_list_el.append(
-                         img_lnk,
+                         buildLinkListItem(img_urls[i], i),
                          document.createElement("br")
                        );
   }
