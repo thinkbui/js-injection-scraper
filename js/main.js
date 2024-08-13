@@ -2,14 +2,14 @@ let getItmNum = function(){
   return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
 }
 
-let getItmDesc = function(){
+let getItmTitle = function(){
   return document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
 }
 
 let downloadName = function(url, i){
   let filename = url.split('/').pop();
   let filename_segs = filename.split('.');
-  return "ebay " + getItmNum() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
+  return "ebay " + getItmNum() + " " + getItmTitle() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
 }
 
 let grabImageUrls = function(){
