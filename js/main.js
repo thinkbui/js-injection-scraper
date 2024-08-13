@@ -3,7 +3,9 @@ let getItmNum = function(){
 }
 
 let getItmTitle = function(){
-  return document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  let item_title = document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  item_title = item_title.replace(/[#&%\{\}\/\\<>\*\?\$!'":`@\+\|=]/,"");
+  return item_title;
 }
 
 let downloadName = function(url, i){
