@@ -1,4 +1,6 @@
 //Poshmark Feb 2024
+// This was a quick-and-dirty script for use with Poshmark and the version
+// of its website as of February 2024.
 var copyDownloadListToClipboard = function(){
   document.getElementById("extract_download_list").select();
   document.execCommand("copy");

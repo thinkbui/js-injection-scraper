@@ -1,4 +1,6 @@
 //carousell 2024 mar
+// This was a quick-and-dirty script for use with Carousell and the version
+// of its website as of March 2024.
 var copyDownloadListToClipboard = function(){
   document.getElementById("extract_download_list").select();
   document.execCommand("copy");
