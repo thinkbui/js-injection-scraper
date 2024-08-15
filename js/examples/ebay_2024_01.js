@@ -11,7 +11,12 @@ let getItmTitle = function(){
 let downloadName = function(url, i){
   let filename = url.split('/').pop();
   let filename_segs = filename.split('.');
-  return "ebay " + getItmNum() + " " + getItmTitle() + " " + filename_segs[0] + " " + i + "." + filename_segs[1];
+  let download_name = "ebay " + getItmNum() + " " + getItmTitle() + " " + filename_segs[0];
+  for (let j=1; j<filename_segs.length-1; j++){
+    download_name += "." + filename_segs[j];
+  }
+  download_name += " " + i + "." + filename_segs[filename_segs.length-1];
+  return download_name;
 }
 
 let grabImageUrls = function(){
