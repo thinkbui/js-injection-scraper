@@ -64,7 +64,8 @@ const OPENED_EL_STYLE = `
                           bottom: 0;
                           left: 0;
                           text-align: center;
-                          overflow: hidden;
+                          overflow-x: hidden;
+                          overflow-y: scroll;
                           visibility: hidden;
                         `;
 const CLOSED_EL_STYLE = `
