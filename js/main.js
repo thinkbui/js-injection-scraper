@@ -8,6 +8,8 @@ let getItmTitle = function(){
 
 let downloadName = function(url, i){
   // ADD CODE HERE
+  // Use getFilename(url), getFilenameName(filename),
+  // and getFilenameExt(filename) to break up filename.
 }
 
 let grabImageUrls = function(){
@@ -46,7 +48,8 @@ const OPENED_EL_STYLE = `
                           bottom: 0;
                           left: 0;
                           text-align: center;
-                          overflow: hidden;
+                          overflow-x: hidden;
+                          overflow-y: scroll;
                           visibility: hidden;
                         `;
 const CLOSED_EL_STYLE = `
@@ -93,6 +96,24 @@ let removeImgUrlsDups = function(img_urls){
     }
   }
   return img_urls_buffer;
+}
+
+let getFilename = function(url){
+  return url.split('/').pop();
+}
+
+let decomposeFilename = function(filename){
+  return filename.split('.');
+}
+
+let getFilenameName = function(filename){
+  let filename_segs = decomposeFilename(filename);
+  filename_segs.pop();
+  return filename_segs.join(".");
+}
+
+let getFilenameExt = function(filename){
+  return decomposeFilename(filename).pop();
 }
 
 let buildLinkListItem = function(url, i){

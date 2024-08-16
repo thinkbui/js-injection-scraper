@@ -1,53 +1,39 @@
 let getItmNum = function(){
-  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  return document.location.href.split('?')[0].split('/').pop();
 }
 
 let getItmTitle = function(){
-  let item_title = document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
-  item_title = item_title.replace(/[#&%\{\}\/\\<>\*\?\$!'":`@\+\|=]/,"");
-  return item_title;
+  // ADD CODE HERE
 }
 
 let downloadName = function(url, i){
   let filename = getFilename(url);
-  let download_name = ["ebay",getItmNum(),getItmTitle(),getFilenameName(filename),i].join(" ");
+  let download_name = ["poshmark",getItmNum(),getFilenameName(filename),i].join(" ");
   download_name += "." + getFilenameExt(filename);
   return download_name;
 }
 
 let grabImageUrls = function(){
   let img_urls = [];
-  let pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
-  // console.log(pics.length);
-  if(pics.length > 0){
-    img_urls = [...pics].map(function(n) {
-      if(n.src){
-        return n.src;
-      }else{
-        return n.dataset.src;
-      }
-    });
-    // console.log(img_urls);
-  } else {
-    let img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
-    img_urls.push(img.src);
-    // console.log(img_urls);
+  let pics = document.getElementsByClassName("carousel__inner")[0].getElementsByTagName("img");
+  if (pics.length > 0){
+    for(let i=0;i<pics.length;i++){
+      img_urls.push(pics[i].src || pics[i].dataset.src);
+    }
   }
-  // console.log(img_urls);
   return img_urls;
 }
 
 let processImgUrls = function(img_urls){
   let img_urls_buffer = img_urls;
   for (let i=0; i<img_urls_buffer.length; i++){
-    // console.log(img_urls_buffer);
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/_\d+\.JPG/,"_10.JPG");
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.jpg/i,"/s-l1600.jpg"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.gif/i,"/s-l1600.gif"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.webp/i,"/s-l1600.jpg"); //////2015 format
+    let img_filename = img_urls_buffer[i].split('/').pop();
+    let new_img_filename = img_filename.replace(/^s_/,"");
+    new_img_filename = new_img_filename.replace(/^m_/,"");
+    new_img_filename = new_img_filename.replace(/^l_/,"");
+    img_urls_buffer[i] = img_urls_buffer[i].replace(img_filename, new_img_filename);
   }
-  return img_urls_buffer;
+return img_urls_buffer;
 }
 
 const BODY = document.getElementsByTagName("body")[0];
