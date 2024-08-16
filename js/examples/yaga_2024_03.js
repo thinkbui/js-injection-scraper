@@ -8,13 +8,9 @@ let getItmTitle = function(){
 }
 
 let downloadName = function(url, i){
-  let filename = url.split('/').pop();
-  let filename_segs = filename.split('.');
-  let download_name = "yaga " + getItmNum() + " " + filename_segs[0];
-  for (let j=1; j<filename_segs.length-1; j++){
-    download_name += "." + filename_segs[j];
-  }
-  download_name += " " + i + "." + filename_segs[filename_segs.length-1];
+  let filename = getFilename(url);
+  let download_name = ["yaga",getItmNum(),getFilenameName(filename),i].join(" ");
+  download_name += "." + getFilenameExt(filename);
   return download_name;
 }
 
@@ -111,6 +107,24 @@ let removeImgUrlsDups = function(img_urls){
     }
   }
   return img_urls_buffer;
+}
+
+let getFilename = function(url){
+  return url.split('/').pop();
+}
+
+let decomposeFilename = function(filename){
+  return filename.split('.');
+}
+
+let getFilenameName = function(filename){
+  let filename_segs = decomposeFilename(filename);
+  filename_segs.pop();
+  return filename_segs.join(".");
+}
+
+let getFilenameExt = function(filename){
+  return decomposeFilename(filename).pop();
 }
 
 let buildLinkListItem = function(url, i){
