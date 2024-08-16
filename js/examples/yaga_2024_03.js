@@ -1,7 +1,6 @@
 // KNOWN ISSUE: This only functions when page is at "desktop" width.
 let getItmNum = function(){
-  let itm_url_split = document.location.href.split('?')[0].split('/');
-  let itm_num = itm_url_split[5];
+  return document.location.href.split('?')[0].split('/')[5];
 }
 
 let getItmTitle = function(){
