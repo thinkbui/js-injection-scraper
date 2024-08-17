@@ -1,52 +1,33 @@
 let getItmNum = function(){
-  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  return document.location.href.split('?')[0].split('/')[6];
 }
 
 let getItmTitle = function(){
-  let item_title = document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  let item_title = document.querySelectorAll("h1[data-test='product-title']")[0].innerHTML;
   item_title = item_title.replaceAll(/[#&%\{\}\/\\<>\[\]\*\?\$!'":,;`@\+\|=]/g,"");
   item_title = item_title.replaceAll(/[^\x00-\x7F]/g,"");
   return item_title;
 }
 
 let downloadName = function(url, i){
-  let filename = getFilename(url);
-  let download_name = ["ebay",getItmNum(),getItmTitle(),getFilenameName(filename),i].join(" ");
-  download_name += "." + getFilenameExt(filename);
-  return download_name;
+  return ["target",getItmNum(),getItmTitle(),getFilename(url).split('?')[0],i].join(" ") + ".jpg";
 }
 
 let grabImageUrls = function(){
   let img_urls = [];
-  let pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
-  // console.log(pics.length);
-  if(pics.length > 0){
-    img_urls = [...pics].map(function(n) {
-      if(n.src){
-        return n.src;
-      }else{
-        return n.dataset.src;
-      }
-    });
-    // console.log(img_urls);
-  } else {
-    let img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
-    img_urls.push(img.src);
-    // console.log(img_urls);
+  let pics = document.querySelectorAll("[data-module-type='ProductDetailImageGallery'] img");
+  if (pics.length > 0){
+    for(var i=0;i<pics.length;i++){
+      img_urls.push(pics[i].src);
+    }
   }
-  // console.log(img_urls);
   return img_urls;
 }
 
 let processImgUrls = function(img_urls){
   let img_urls_buffer = img_urls;
-  for (let i=0; i<img_urls_buffer.length; i++){
-    // console.log(img_urls_buffer);
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/_\d+\.JPG/,"_10.JPG");
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.jpg/i,"/s-l1600.jpg"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.gif/i,"/s-l1600.gif"); //////2015 format
-    img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.webp/i,"/s-l1600.jpg"); //////2015 format
+  for(let i=0;i<img_urls_buffer.length;i++){
+    img_urls_buffer[i] = img_urls_buffer[i].split("?")[0] + "?wid=3000&hei=3000";
   }
   return img_urls_buffer;
 }
