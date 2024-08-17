@@ -4,7 +4,8 @@ let getItmNum = function(){
 
 let getItmTitle = function(){
   let item_title = document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
-  item_title = item_title.replaceAll(/[#&%\{\}\/\\<>\*\?\$!'":`@\+\|=]/g,"");
+  item_title = item_title.replaceAll(/[#&%\{\}\/\\<>\[\]\*\?\$!'":,;`@\+\|=]/g,"");
+  item_title = item_title.replaceAll(/[^\x00-\x7F]/g,"");
   return item_title;
 }
 
