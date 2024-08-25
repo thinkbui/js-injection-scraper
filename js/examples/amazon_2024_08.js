@@ -133,6 +133,8 @@ let getFilenameExt = function(filename){
 let buildLinkListItem = function(url, i){
   let img_lnk = document.createElement("a");
   img_lnk.href = url;
+  img_lnk.target = "_blank";
+  img_lnk.rel = "noopener noreferrer";
   img_lnk.download = downloadName(url, i);
   img_lnk.innerHTML = downloadName(url, i);
   return img_lnk;
