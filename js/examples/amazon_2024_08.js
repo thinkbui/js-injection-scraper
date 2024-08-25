@@ -1,24 +1,27 @@
 let getItmNum = function(){
-  return document.location.href.split('?')[0].split('/').pop();
+  return document.location.href.split('?')[0].split('/')[5];
 }
 
 let getItmTitle = function(){
-  // ADD CODE HERE
+  let item_title = document.getElementById("productTitle").innerHTML.trim();
+  item_title = item_title.replaceAll(/[#&%\{\}\/\\<>\[\]\*\?\$!'":,;`@\+\|=]/g,"");
+  item_title = item_title.replaceAll(/[^\x00-\x7F]/g,"");
+  return item_title;
 }
 
 let downloadName = function(url, i){
   let filename = getFilename(url);
-  let download_name = ["poshmark",getItmNum(),getFilenameName(filename),i].join(" ");
+  let download_name = ["amazon",getItmNum(),getItmTitle(),getFilenameName(filename),i].join(" ");
   download_name += "." + getFilenameExt(filename);
   return download_name;
 }
 
 let grabImageUrls = function(){
   let img_urls = [];
-  let pics = document.getElementsByClassName("carousel__inner")[0].getElementsByTagName("img");
+  let pics = document.querySelectorAll("#altImages ul li.imageThumbnail img");
   if (pics.length > 0){
-    for(let i=0;i<pics.length;i++){
-      img_urls.push(pics[i].src || pics[i].dataset.src);
+    for(var i=0;i<pics.length;i++){
+      img_urls.push(pics[i].src);
     }
   }
   return img_urls;
@@ -26,14 +29,13 @@ let grabImageUrls = function(){
 
 let processImgUrls = function(img_urls){
   let img_urls_buffer = img_urls;
-  for (let i=0; i<img_urls_buffer.length; i++){
-    let img_filename = img_urls_buffer[i].split('/').pop();
-    let new_img_filename = img_filename.replace(/^s_/,"");
-    new_img_filename = new_img_filename.replace(/^m_/,"");
-    new_img_filename = new_img_filename.replace(/^l_/,"");
-    img_urls_buffer[i] = img_urls_buffer[i].replace(img_filename, new_img_filename);
+  for(let i=0;i<img_urls_buffer.length;i++){
+    let url_split = img_urls_buffer[i].split("/");
+    let url_filename_split = url_split[url_split.length-1].split(".");
+    url_split[url_split.length-1] = [url_filename_split[0],url_filename_split[url_filename_split.length-1]].join(".");
+    img_urls_buffer[i] = url_split.join("/");
   }
-return img_urls_buffer;
+  return img_urls_buffer;
 }
 
 const BODY = document.getElementsByTagName("body")[0];
