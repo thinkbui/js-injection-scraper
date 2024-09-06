@@ -1,9 +1,9 @@
 let getItmNum = function(){
-  return document.querySelectorAll(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  return document.querySelector(".ux-layout-section__textual-display--itemId .ux-textspans.ux-textspans--BOLD").innerHTML;
 }
 
 let getItmTitle = function(){
-  let item_title = document.querySelectorAll("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD")[0].innerHTML;
+  let item_title = document.querySelector("h1.x-item-title__mainTitle span.ux-textspans.ux-textspans--BOLD").innerHTML;
   item_title = item_title.replaceAll(/[#&%\{\}\/\\<>\[\]\*\?\$!'":,;`@\+\|=]/g,"");
   item_title = item_title.replaceAll(/[^\x00-\x7F]/g,"");
   return item_title;
@@ -19,7 +19,6 @@ let downloadName = function(url, i){
 let grabImageUrls = function(){
   let img_urls = [];
   let pics = document.getElementById("PicturePanel").querySelectorAll(".ux-image-grid-container.filmstrip.filmstrip-x button.ux-image-grid-item.image-treatment.rounded-edges img");
-  // console.log(pics.length);
   if(pics.length > 0){
     img_urls = [...pics].map(function(n) {
       if(n.src){
@@ -28,20 +27,16 @@ let grabImageUrls = function(){
         return n.dataset.src;
       }
     });
-    // console.log(img_urls);
   } else {
-    let img = document.getElementById("PicturePanel").querySelectorAll("div.image img")[0];
+    let img = document.getElementById("PicturePanel").querySelector("div.image img");
     img_urls.push(img.src);
-    // console.log(img_urls);
   }
-  // console.log(img_urls);
   return img_urls;
 }
 
 let processImgUrls = function(img_urls){
   let img_urls_buffer = img_urls;
   for (let i=0; i<img_urls_buffer.length; i++){
-    // console.log(img_urls_buffer);
     img_urls_buffer[i]=img_urls_buffer[i].replace(/_\d+\.JPG/,"_10.JPG");
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.jpg/i,"/s-l1600.jpg"); //////2015 format
     img_urls_buffer[i]=img_urls_buffer[i].replace(/\/s\-l\d+(\/r)*.png/i,"/s-l1600.png"); //////2015 format
