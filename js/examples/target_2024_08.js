@@ -3,7 +3,7 @@ let getItmNum = function(){
 }
 
 let getItmTitle = function(){
-  let item_title = document.querySelectorAll("h1[data-test='product-title']")[0].innerHTML;
+  let item_title = document.querySelector("h1[data-test='product-title']").innerHTML;
   item_title = item_title.replaceAll(/[#&%\{\}\/\\<>\[\]\*\?\$!'":,;`@\+\|=]/g,"");
   item_title = item_title.replaceAll(/[^\x00-\x7F]/g,"");
   return item_title;
